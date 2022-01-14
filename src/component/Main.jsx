@@ -9,22 +9,26 @@ import Exercise from "./Exercise";
 import WordList from "./WordList";
 import Report from "./Report";
 
+/*
+                <Routes>
+                  <Route exact path="/exercise" element={<Exercise />} />
+                  <Route exact path="/word-list" element={<WordList />} />
+                  <Route path="/report" element={<Report />} />
+                  <Route path="/" element={<Report />} />
+                </Routes>
+*/
 const Main = () => {
   return (
     <>
       <BrowserRouter>
         <div>
-          <Sidebar></Sidebar>
+          <Sidebar />
+          <div>hihihihiasdf</div>
           <div>
             <Header></Header>
+
             <div>
-              <div>
-                <Routes>
-                  <Route exact path="/exercise" element={<Exercise />} />
-                  <Route exact path="/word-list" element={<WordList />} />
-                  <Route path="/report" element={<Report />} />
-                </Routes>
-              </div>
+              <div></div>
             </div>
           </div>
         </div>
