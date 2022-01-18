@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalStore";
+import { LOGOUT } from "../hook/useAuth";
 
 const Sidebar = () => {
-  const { setIsAuthenticated } = useContext(GlobalContext);
+  const { authDispatch } = useContext(GlobalContext);
 
   const logout = () => {
-    setIsAuthenticated(false);
-    window.location.href = "/";
+    authDispatch(LOGOUT);
   };
 
   return (

@@ -5,7 +5,7 @@ import Main from './component/Main';
 import { GlobalContext } from './context/GlobalStore'
 
 function App() {
-  const { isAuthenticated } = useContext(GlobalContext);
+  const { isAuthenticated, } = useContext(GlobalContext);
 
   return (
     <div>
