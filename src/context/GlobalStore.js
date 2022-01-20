@@ -1,7 +1,5 @@
-
-import React, { useEffect, useReducer, useState } from 'react';
-import useAuth from '../hook/useAuth';
-import { authReducer, CHECK, LOGIN } from '../reducer/AuthReducer';
+import React, { useEffect } from 'react';
+import useAuth, { CHECK } from '../hook/useAuth';
 
 export const GlobalContext = React.createContext();
 

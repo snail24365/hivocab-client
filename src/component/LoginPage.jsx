@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from "react";
 import { GlobalContext } from "../context/GlobalStore";
-import { LOGIN } from "../reducer/AuthReducer";
+import { LOGIN } from "../hook/useAuth";
 
 const LoginPage = () => {
   const { authDispatch } = useContext(GlobalContext);

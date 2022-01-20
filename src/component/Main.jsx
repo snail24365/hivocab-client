@@ -19,9 +19,9 @@ const Main = () => {
             <Header />
             <div>
               <Routes>
-                <Route exact path="/" element={<Exercise />} />
                 <Route exact path="/word-list" element={<WordList />} />
                 <Route path="/report" element={<Report />} />
+                <Route path="/" element={<Exercise />} />
               </Routes>
             </div>
           </div>
