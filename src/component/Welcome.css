@@ -1,0 +1,56 @@
+.welcome-container {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+}
+
+.welcome-container .spacing {
+  width: 150px;
+  height: 200px;
+}
+
+.welcome-container .card {
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border-radius: 20px 20px 20px 20px;
+  -webkit-border-radius: 20px 20px 20px 20px;
+  -moz-border-radius: 20px 20px 20px 20px;
+  -ms-border-radius: 20px 20px 20px 20px;
+  -o-border-radius: 20px 20px 20px 20px;
+}
+
+.welcome-container .card:hover {
+  cursor: pointer;
+}
+
+.welcome-container .card i {
+  font-size: 90px;
+  color: rgba(0,0,0,0.9);
+}
+
+.welcome-container .hover-message {
+  padding-top: 20px;
+  font-size: 30px;
+  color: black;
+  font-weight: 100;
+  font-family: fantasy;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: all .7s ease-in-out;
+  -webkit-transition: all .7s ease-in-out;
+  -moz-transition: all .7s ease-in-out;
+  -ms-transition: all .7s ease-in-out;
+  -o-transition: all .7s ease-in-out;
+}
+
+.welcome-container .card:hover ~ .hover-message { 
+  opacity: 1;
+}

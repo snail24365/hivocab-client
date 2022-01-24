@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import { saying } from "../wiseSaying";
+import "./Exercise.css";
 
 const Exercise = () => {
   const writingRef = useRef();
@@ -112,35 +114,57 @@ const Exercise = () => {
     fetchNextExercise();
   };
 
+  const SAYING_SIZE = saying.length;
+  const randomIndex = () => parseInt(Math.random() * SAYING_SIZE);
+  let initSayingIndex = randomIndex();
+  const [sayingIndex, setSayingIndex] = useState(initSayingIndex);
+
+  useEffect(() => {
+    const sec = 1000;
+    setInterval(() => {
+      setSayingIndex(randomIndex());
+    }, 15 * sec);
+    return () => {};
+  }, []);
+
   return (
-    <>
-      <div className="card">
-        <h1>{exercise.word}</h1>
-        <div>{exercise.description}</div>
-        <ul>{exampleList}</ul>
-      </div>
-
-      <div>
-        <ul>{writingList}</ul>
-      </div>
-
-      <div className="card">
-        <div>
-          <input
-            type="text"
-            id="writingInput"
-            ref={writingRef}
-            onKeyDown={onWritingInputKeyDown}
-          />
-          <button id="addMyWriting" onClick={addWriting}>
-            제출
-          </button>
+    <div className="exercise-container">
+      <div className="exercise-box">
+        <div class="saying">
+          <p>{saying[sayingIndex].en}</p>
+          <div class="translation">{saying[sayingIndex].ko}</div>
         </div>
-        <button onClick={moveNextExercise} disabled={writing.length === 0}>
-          다음 예제
-        </button>
+        <div className="card">
+          <h1 className="word-spelling">{exercise.word}</h1>
+          <p className="description">{exercise.description}</p>
+          <ul className="example-list">{exampleList}</ul>
+        </div>
+        <div>
+          <div className="card">
+            <div>
+              <input
+                type="text"
+                id="writingInput"
+                ref={writingRef}
+                onKeyDown={onWritingInputKeyDown}
+              />
+              <button id="addMyWriting" onClick={addWriting}>
+                제출
+              </button>
+            </div>
+            <button onClick={moveNextExercise} disabled={writing.length === 0}>
+              다음 예제
+            </button>
+          </div>
+        </div>
+
+        <div className="card">
+          <div>
+            <ul>{writingList}</ul>
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

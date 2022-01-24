@@ -1,0 +1,37 @@
+.exercise-container {
+  padding: 10px 30px;
+  height: 100%;
+}
+
+
+.saying {
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--text-color);
+  padding: 12px 30px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  background-color: white;
+  margin-bottom: 30px;
+}
+
+.exercise-box {
+  height: calc(100% - 122px);
+}
+
+.exercise-box .word-spelling {
+  font-size: 82px;
+}
+
+.exercise-box .description {
+  font-size: 24px;
+  padding: 20px;
+}
+
+.exercise-box .example-list {
+  font-size: 18px;
+  padding: 20px; 
+}
+
+.exercise-box .example-list li {
+  margin-bottom: 10px;
+}

@@ -1,32 +1,57 @@
-import React, { useEffect, useState } from "react";
-
-function fetchWordInfos() {
-  return [...Array(10).keys()].map((x) => {
-    return {
-      id: x,
-      word: "Apple",
-      usages: [
-        { id: 0, description: "description1" },
-        { id: 1, description: "description2" },
-      ],
-    };
-  });
-}
-
-function fetchMaxPageNumber() {
-  return fetchWordInfos().length;
-}
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 
 const WordList = () => {
-  const [wordInfos, setWordInfos] = useState([]);
-
+  const [pageIndexes, setPageIndexes] = useState([
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+  ]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  var maxPageNumber = 9999999;
+  var maximumPage = useRef(10);
+  const pageSize = 20;
+
+  const [words, setWords] = useState([]);
+
   useEffect(() => {
-    setWordInfos(fetchWordInfos());
-    maxPageNumber = fetchMaxPageNumber();
+    axios.get("/word/count").then((response) => {
+      maximumPage.current = Math.floor(response.data / pageSize);
+      console.log(maximumPage);
+    });
+
+    fetchWordList(currentPage.current);
   }, []);
+
+  useEffect(() => {
+    updatePageIndex();
+    fetchWordList();
+  }, [currentPage]);
+
+  const fetchWordList = () => {
+    axios.get("/word?page=" + currentPage).then((res) => {
+      console.log(res.data);
+      setWords(res.data.map((item) => item.spelling));
+    });
+  };
+
+  const updatePageIndex = () => {
+    let maxIndex = maximumPage.current;
+    var indexes = [];
+    if (currentPage <= 5) {
+      for (let i = 1; i <= 10; i++) {
+        indexes.push(i);
+      }
+    } else if (currentPage <= maxIndex - 5) {
+      for (let i = 1; i <= 10; i++) {
+        console.log(currentPage - 5 + i);
+        indexes.push(currentPage - 5 + i);
+      }
+    } else {
+      for (let i = maximumPage - 9; i <= maxIndex; i++) {
+        indexes.push(i);
+      }
+    }
+    setPageIndexes(indexes);
+  };
 
   const movePreviousPage = () => {
     if (currentPage > 1) {
@@ -35,30 +60,25 @@ const WordList = () => {
   };
 
   const moveNextPage = () => {
-    if (currentPage < maxPageNumber) {
+    if (currentPage < maximumPage.current) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  const wordList = wordInfos.map((wordInfo) => (
-    <li>
-      <div>{wordInfo.word}</div>
-      <div>
-        <ul>
-          {wordInfo.usages.map((usage) => (
-            <li>{usage.description}</li>
-          ))}
-        </ul>
-      </div>
+  const indexes = pageIndexes.map((index) => (
+    <li key={index} className={`${index === currentPage ? "selected" : ""}`}>
+      {index}
     </li>
   ));
 
-  const pageIndexes = [1, 2, 3, 4, 5, 6, 7, 8, 9].map((x) => (
-    <li key={x} className={`${x === currentPage ? "selected" : ""}`}>
-      {x}
-    </li>
-  ));
-  pageIndexes.push(<li key="dots"> ... </li>);
+  const wordList = words.map((word, index) => {
+    console.log(word);
+    return (
+      <li key={index}>
+        <p>{word}</p>
+      </li>
+    );
+  });
 
   return (
     <>
@@ -66,7 +86,7 @@ const WordList = () => {
       <ul>{wordList}</ul>
       <div>
         <button onClick={movePreviousPage}>left</button>
-        <ul>{pageIndexes}</ul>
+        <ul>{indexes}</ul>
         <button onClick={moveNextPage}>right</button>
       </div>
     </>

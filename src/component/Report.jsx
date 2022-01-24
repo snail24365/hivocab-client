@@ -1,6 +1,25 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const Report = () => {
+  const [studyInfo, setStudyInfo] = useState({
+    study_goal: 10,
+    study_amount: 0,
+    latest_visit: "",
+    count_by_day: [],
+  });
+
+  const fetchStudyInfo = () => {
+    axios.get("/user/study-info").then((res) => {
+      console.log(res.data);
+      setStudyInfo({ ...res.data });
+    });
+  };
+
+  useEffect(() => {
+    fetchStudyInfo();
+  }, []);
+
   return (
     <>
       <div>레포트</div>
