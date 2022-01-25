@@ -10,7 +10,7 @@ const Welcome = () => {
     <div className="welcome-container">
       <a href="/login">
         <div className="card">
-          <i class="bx bx-log-in"></i>
+          <i className="bx bx-log-in"></i>
         </div>
         <div className="hover-message">
           <p>로그인</p>
@@ -20,7 +20,7 @@ const Welcome = () => {
       <div className="spacing"></div>
       <a href="/sign-up">
         <div className="card">
-          <i class="bx bx-user-plus"></i>
+          <i className="bx bx-user-plus"></i>
         </div>
         <div className="hover-message">
           <p>회원가입</p>

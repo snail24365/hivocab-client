@@ -1,5 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import { saying } from "../wiseSaying";
+import "./WordList.css";
+
+var interval = undefined;
 
 const WordList = () => {
   const [pageIndexes, setPageIndexes] = useState([
@@ -59,6 +63,12 @@ const WordList = () => {
     }
   };
 
+  const movePage = (page) => {
+    if (page > 0) {
+      setCurrentPage(page);
+    }
+  };
+
   const moveNextPage = () => {
     if (currentPage < maximumPage.current) {
       setCurrentPage(currentPage + 1);
@@ -66,30 +76,61 @@ const WordList = () => {
   };
 
   const indexes = pageIndexes.map((index) => (
-    <li key={index} className={`${index === currentPage ? "selected" : ""}`}>
-      {index}
+    <li
+      key={index}
+      className={`index noselect ${index === currentPage ? "selected" : ""}`}
+      onClick={() => {
+        movePage(index);
+      }}
+    >
+      <span className="noselect">{index}</span>
     </li>
   ));
 
   const wordList = words.map((word, index) => {
-    console.log(word);
     return (
-      <li key={index}>
-        <p>{word}</p>
+      <li key={index} className="card noselect">
+        <p className="noselect">{word}</p>
       </li>
     );
   });
 
+  const SAYING_SIZE = saying.length;
+  const randomIndex = () => parseInt(Math.random() * SAYING_SIZE);
+  let initSayingIndex = randomIndex();
+  const [sayingIndex, setSayingIndex] = useState(initSayingIndex);
+
+  useEffect(() => {
+    const sec = 1000;
+    interval = setInterval(() => {
+      setSayingIndex(randomIndex());
+    }, 15 * sec);
+    return () => {
+      if (interval !== undefined) {
+        clearInterval(interval);
+      }
+    };
+  }, []);
+
   return (
-    <>
-      <div>단어 리스트</div>
-      <ul>{wordList}</ul>
-      <div>
-        <button onClick={movePreviousPage}>left</button>
-        <ul>{indexes}</ul>
-        <button onClick={moveNextPage}>right</button>
+    <div className="word-list-page-container">
+      <div className="saying">
+        <p>{saying[sayingIndex].en}</p>
+        <div className="translation">{saying[sayingIndex].ko}</div>
       </div>
-    </>
+      <div className="word-list-container">
+        <ul className="word-list">{wordList}</ul>
+      </div>
+      <div className="page-index-box">
+        <button onClick={movePreviousPage}>
+          <i className="bx bx-left-arrow-alt"></i>
+        </button>
+        <ul className="page-indexes">{indexes}</ul>
+        <button onClick={moveNextPage}>
+          <i className="bx bx-right-arrow-alt"></i>
+        </button>
+      </div>
+    </div>
   );
 };
 

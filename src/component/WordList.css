@@ -1,5 +1,60 @@
 
 li.selected {
-  color: skyblue;
+  color: var(--primary-color);
   font-weight: bold;
+}
+
+.word-list-page-container {
+  padding: 10px 30px 10px 30px;
+}
+
+.word-list {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+  grid-template-rows: repeat(5, 80px);
+  grid-gap: 30px;
+}
+
+.word-list li {
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-index-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 30px;
+  justify-content: center;
+}
+
+.page-index-box i {
+  font-size: 25px;
+  padding-bottom: 15px;
+}
+
+.page-indexes {
+  display: flex;
+  flex-direction: row; 
+}
+
+.page-indexes li {
+  padding : 0 10px;
+}
+
+.page-indexes .index {
+  border: 1px solid silver;
+  border-radius: 5px;
+  background-color: white;
+  margin: 0 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+.page-indexes .index:hover {
+  cursor: pointer;
 }

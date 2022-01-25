@@ -20,7 +20,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div class="login-container">
+    <div className="login-container">
       <div className="formBox">
         <input
           type="text"

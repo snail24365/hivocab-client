@@ -12,7 +12,6 @@ body {
 
 .auth-container {
   width: 980px;
-  height: 530px;
   margin: auto;
   border-radius: 40px;
   padding: 40px;
@@ -60,7 +59,7 @@ body {
 
 .auth-container .header .back i{
   position: relative;
-  top: 5px;
+  top: -5px;
   left: 5px;
 }
 

@@ -51,7 +51,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <div class="sign-up-container">
+    <div className="sign-up-container">
       <div className="formBox">
         <input
           type="text"

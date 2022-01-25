@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import { removeBraceAndEscaping } from "../util/util";
 import { saying } from "../wiseSaying";
 import "./Exercise.css";
 
@@ -7,24 +8,14 @@ const Exercise = () => {
   const writingRef = useRef();
 
   const [exercise, setExercise] = useState({
-    currentUsecase: 0,
+    currentUsecase: -1,
     word: "",
     description: "",
     examples: [],
   });
   const [writing, setWriting] = useState([]);
 
-  useEffect(() => {
-    let init = async () => {
-      await fetchExercise();
-      await fetchWriting();
-    };
-    init();
-  }, []);
-
-  useEffect(() => {
-    fetchWriting();
-  }, [exercise]);
+  const writingListRef = useRef();
 
   const fetchExercise = async () => {
     const response = await axios.get("/exercise");
@@ -50,23 +41,30 @@ const Exercise = () => {
   };
 
   const fetchWriting = async () => {
-    console.log("Fetch Writing Called");
+    if (exercise.currentUsecase === -1) {
+      return;
+    }
     const url = "/writing?usecaseId=" + exercise.currentUsecase;
-    console.log(url);
     const response = await axios.get(url);
     const data = response.data;
     console.log(data);
 
-    setWriting(
-      response.data.map((item) => {
-        return {
-          id: item.id,
-          created_at: item.created_at,
-          writing: item.writing,
-        };
-      })
-    );
-    return data;
+    let writing = data.map((tuple) => {
+      return {
+        id: tuple.id,
+        created_at: tuple.created_at,
+        writing: tuple.writing,
+      };
+    });
+    setWriting(writing);
+  };
+
+  const deleteWriting = async (writingId) => {
+    axios.delete("/writing?id=" + writingId).then((res) => {
+      console.log(res);
+      fetchWriting();
+    });
+    console.log(writingId);
   };
 
   const addWriting = async () => {
@@ -92,14 +90,24 @@ const Exercise = () => {
   };
 
   const exampleList = exercise.examples.map((example, index) => (
-    <li key={index}>{example}</li>
+    <li key={index}>{removeBraceAndEscaping(example)}</li>
   ));
 
   const writingList = writing.map((item, index) => {
     return (
-      <li key={index}>
-        <span>{item.writing}</span>
-        <button>X</button>
+      <li key={index} className="writing-item card">
+        <span className="sentence">{item.writing}</span>
+        <span className="createdAt">
+          {new Date(item.created_at).toUTCString()}
+        </span>
+        <button
+          className="delete-button"
+          onClick={() => {
+            deleteWriting(item.id);
+          }}
+        >
+          X
+        </button>
       </li>
     );
   });
@@ -114,55 +122,77 @@ const Exercise = () => {
     fetchNextExercise();
   };
 
-  const SAYING_SIZE = saying.length;
-  const randomIndex = () => parseInt(Math.random() * SAYING_SIZE);
-  let initSayingIndex = randomIndex();
-  const [sayingIndex, setSayingIndex] = useState(initSayingIndex);
+  useEffect(() => {
+    writingListRef.current.scrollTop = writingListRef.current.scrollHeight;
+  }, [writing]);
 
   useEffect(() => {
-    const sec = 1000;
-    setInterval(() => {
-      setSayingIndex(randomIndex());
-    }, 15 * sec);
-    return () => {};
+    let init = async () => {
+      await fetchExercise();
+      await fetchWriting();
+    };
+    init();
   }, []);
+
+  useEffect(() => {
+    fetchWriting();
+  }, [exercise]);
 
   return (
     <div className="exercise-container">
-      <div className="exercise-box">
-        <div class="saying">
-          <p>{saying[sayingIndex].en}</p>
-          <div class="translation">{saying[sayingIndex].ko}</div>
-        </div>
-        <div className="card">
-          <h1 className="word-spelling">{exercise.word}</h1>
-          <p className="description">{exercise.description}</p>
-          <ul className="example-list">{exampleList}</ul>
-        </div>
-        <div>
-          <div className="card">
-            <div>
-              <input
-                type="text"
-                id="writingInput"
-                ref={writingRef}
-                onKeyDown={onWritingInputKeyDown}
-              />
-              <button id="addMyWriting" onClick={addWriting}>
-                제출
-              </button>
-            </div>
-            <button onClick={moveNextExercise} disabled={writing.length === 0}>
-              다음 예제
-            </button>
-          </div>
-        </div>
+      <div className="word-info-box card">
+        <h1 className="word-spelling">
+          {removeBraceAndEscaping(exercise.word)}
+        </h1>
+        <p className="description">
+          {removeBraceAndEscaping(exercise.description)}
+        </p>
+        <ul className="example-list">{exampleList}</ul>
+      </div>
 
-        <div className="card">
-          <div>
+      <div className="writing-box card ">
+        <div className="writing-list-wrapper">
+          <div className="header">
+            <h1 className="title">My writings</h1>
+            <br />
+            <hr />
+          </div>
+
+          <div className="writing-list" ref={writingListRef}>
             <ul>{writingList}</ul>
           </div>
         </div>
+        <div className="form">
+          <input
+            type="text"
+            id="writingInput"
+            ref={writingRef}
+            onKeyDown={onWritingInputKeyDown}
+          />
+          <button id="addMyWriting" onClick={addWriting}>
+            <i className="bx bx-pencil"></i>
+          </button>
+        </div>
+      </div>
+      <div className="card right-box">
+        <div className="right-box-content">
+          <h3 className="title">학습 방법</h3>
+          <ul>
+            <li className="subitem">
+              1. 단어 설명과 예제를 읽고 그 용법을 파악
+            </li>
+            <li className="subitem">2. 해당 용법의 예문을 직접 작문</li>
+            <li className="subitem">3. 다음 예제로 가는 ➞ 버튼 누르기 </li>
+          </ul>
+          <p className="text"></p>
+        </div>
+        {writing.length === 0 ? (
+          <></>
+        ) : (
+          <button onClick={moveNextExercise} disabled={writing.length === 0}>
+            <i className="bx bx-right-arrow-alt"></i>
+          </button>
+        )}
       </div>
     </div>
   );

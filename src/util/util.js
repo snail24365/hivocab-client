@@ -18,3 +18,9 @@ function getCookie(name) {
     return c.trim().startsWith(name + '=');
   });
 }
+
+export function removeBraceAndEscaping(origin) {
+  return origin.replace(/\{[\w\d\|]+\}/gi, "")
+    .replace(/&apos;/gi, "'")
+
+}

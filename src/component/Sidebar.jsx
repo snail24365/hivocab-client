@@ -47,16 +47,16 @@ const Sidebar = () => {
               <Link to="/word-list">
                 <li className="nav-link">
                   <a href="#">
-                    <i className="bx bx-bar-chart-alt-2 icon"></i>
-                    <span className="text nav-text">Report</span>
+                    <i className="bx bx-list-ul icon"></i>
+                    <span className="text nav-text">Word List</span>
                   </a>
                 </li>
               </Link>
               <Link to="/report">
                 <li className="nav-link">
                   <a href="#">
-                    <i className="bx bx-bell icon"></i>
-                    <span className="text nav-text">Word List</span>
+                    <i className="bx bx-bar-chart-alt-2 icon"></i>
+                    <span className="text nav-text">Report</span>
                   </a>
                 </li>
               </Link>

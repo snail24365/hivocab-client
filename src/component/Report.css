@@ -1,0 +1,66 @@
+.report-container {
+  padding: 30px;
+  width: 100%;
+  height: 100%;
+}
+
+.progress-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding-bottom: 50px;
+}
+
+.progress-container .card {
+  width: 300px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.graph-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-container .card .title {
+  font-size: 32px;
+  color: var(--text-color);
+  font-family: 'Poppins', sans-serif;
+  padding: 15px 0;
+}
+
+.progress-container .card .text {
+  padding-top: 20px;
+  color: var(--text-color);
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.graph-wrap {
+  width: 1100px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.graph-wrap .h1 {
+  font-size: 32px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.goal {
+  align-items: center;
+  font-size: 30px;
+  margin-top: 22px;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+}

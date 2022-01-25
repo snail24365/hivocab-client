@@ -13,7 +13,7 @@ const Auth = () => {
     <Link to="/">
       <a className="back">
         <span>
-          <i class="bx bx-arrow-back"></i>
+          <i className="bx bx-arrow-back"></i>
         </span>
       </a>
     </Link>

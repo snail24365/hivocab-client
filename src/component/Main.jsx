@@ -7,13 +7,14 @@ import Sidebar from "./Sidebar";
 import Exercise from "./Exercise";
 import WordList from "./WordList";
 import Report from "./Report";
+import { Progress } from "antd";
 
 const Main = () => {
   return (
     <>
       <BrowserRouter>
         <Sidebar />
-        <section class="home">
+        <section className="home">
           <Routes>
             <Route exact path="/word-list" element={<WordList />} />
             <Route path="/report" element={<Report />} />
