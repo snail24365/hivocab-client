@@ -63,8 +63,8 @@ const Sidebar = () => {
             </ul>
           </div>
 
-          <div classNameName="bottom-content">
-            <li classNameName="">
+          <div className="bottom-content">
+            <li className="">
               <a href="/" onClick={logout}>
                 <i className="bx bx-log-out icon"></i>
                 <span className="text nav-text">Logout</span>

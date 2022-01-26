@@ -27,7 +27,7 @@ const LoginPage = () => {
           id="username"
           placeholder="아이디"
           ref={usernameRef}
-          autocomplete="off"
+          autoComplete="off"
         />
 
         <input
@@ -35,7 +35,7 @@ const LoginPage = () => {
           id="password"
           placeholder="패스워드"
           ref={passwordRef}
-          autocomplete="off"
+          autoComplete="off"
         />
         <button onClick={login}>접속</button>
       </div>

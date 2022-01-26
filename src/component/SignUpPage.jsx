@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { AuthPageContext } from "../context/AuthPageStore";
 import "./SignUpPage.css";
 
@@ -8,7 +8,10 @@ const SignUpPage = () => {
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
   const { setSignUpTitle } = useContext(AuthPageContext);
-  setSignUpTitle();
+
+  useEffect(() => {
+    setSignUpTitle();
+  }, []);
 
   const signUp = () => {
     const username = usernameRef.current.value;
@@ -58,7 +61,7 @@ const SignUpPage = () => {
           id="username"
           placeholder="아이디"
           ref={usernameRef}
-          autocomplete="off"
+          autoComplete="off"
         />
         <label>아이디는 5자리 이상의 조합을 사용해주세요.</label>
 
@@ -67,7 +70,7 @@ const SignUpPage = () => {
           id="password"
           placeholder="패스워드"
           ref={passwordRef}
-          autocomplete="off"
+          autoComplete="off"
         />
         <label>패스워드는 8자리 이상의 조합을 사용해주세요.</label>
 
@@ -76,7 +79,7 @@ const SignUpPage = () => {
           id="passwordConfirm"
           placeholder="패스워드 확인"
           ref={passwordConfirmRef}
-          autocomplete="off"
+          autoComplete="off"
         />
         <button onClick={signUp}>등록</button>
       </div>
